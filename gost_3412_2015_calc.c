@@ -192,7 +192,7 @@ GOST_Kuz_Encript(const uint8_t *blk, uint8_t *out_blk)
     GOST_Kuz_X(out_blk, iter_key[9], out_blk);
 
 #ifdef DEBUG_MODE
-    printf("Encripting text:\n");
+    printf("Encripted text:\n");
     GOST_Kuz_PrintDebug(out_blk);
 #endif
 }
@@ -219,7 +219,7 @@ GOST_Kuz_Decript(const uint8_t *blk, uint8_t *out_blk)
     }
 
 #ifdef DEBUG_MODE
-    printf("Decripting text:\n");
+    printf("Decripted text:\n");
     GOST_Kuz_PrintDebug(out_blk);
 #endif
 }
