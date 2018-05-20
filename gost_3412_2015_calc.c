@@ -171,7 +171,7 @@ GOST_Kuz_Expand_Key(const uint8_t *key_1, const uint8_t *key_2)
 }
 
 void
-GOST_Kuz_Encript(const uint8_t *blk, uint8_t *out_blk)
+GOST_Kuz_Encrypt(const uint8_t *blk, uint8_t *out_blk)
 {
     int i;
     memcpy(out_blk, blk, BLOCK_SIZE);
@@ -192,13 +192,13 @@ GOST_Kuz_Encript(const uint8_t *blk, uint8_t *out_blk)
     GOST_Kuz_X(out_blk, iter_key[9], out_blk);
 
 #ifdef DEBUG_MODE
-    printf("Encripted text:\n");
+    printf("Encrypted text:\n");
     GOST_Kuz_PrintDebug(out_blk);
 #endif
 }
 
 void
-GOST_Kuz_Decript(const uint8_t *blk, uint8_t *out_blk)
+GOST_Kuz_Decrypt(const uint8_t *blk, uint8_t *out_blk)
 {
     int i;
     memcpy(out_blk, blk, BLOCK_SIZE);
@@ -219,7 +219,7 @@ GOST_Kuz_Decript(const uint8_t *blk, uint8_t *out_blk)
     }
 
 #ifdef DEBUG_MODE
-    printf("Decripted text:\n");
+    printf("Decrypted text:\n");
     GOST_Kuz_PrintDebug(out_blk);
 #endif
 }
