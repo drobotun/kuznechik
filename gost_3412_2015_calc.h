@@ -18,7 +18,7 @@ vect iter_C[32]; //итерационные константы C
 vect iter_key[10]; //итерационные ключи шифрования
 
 void
-GOST_Kuz_Expand_Key(const uint8_t *key_1, const uint8_t *key_2);
+GOST_Kuz_Expand_Key(const uint8_t *key);
 
 void
 GOST_Kuz_Encrypt(const uint8_t *blk, uint8_t *out_blk);

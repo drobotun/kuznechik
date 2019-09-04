@@ -140,14 +140,14 @@ void
 GOST_Kuz_Expand_Key(const uint8_t *key)
 {
     int i;
-    uint8_t key_1[BLCK_SIZE];
-    uint8_t key_2[BLCK_SIZE];
+    uint8_t key_1[BLOCK_SIZE];
+    uint8_t key_2[BLOCK_SIZE];
     uint8_t iter_1[BLOCK_SIZE];
     uint8_t iter_2[BLOCK_SIZE];
     uint8_t iter_3[BLOCK_SIZE];
     uint8_t iter_4[BLOCK_SIZE];
-    memcpy(key_1, key + BLCK_SIZE, BLCK_SIZE);
-    memcpy(key_2, key, BLCK_SIZE);
+    memcpy(key_1, key + BLOCK_SIZE, BLOCK_SIZE);
+    memcpy(key_2, key, BLOCK_SIZE);
     GOST_Kuz_Get_C();
     memcpy(iter_key[0], key_1, BLOCK_SIZE);
     memcpy(iter_key[1], key_2, BLOCK_SIZE);
