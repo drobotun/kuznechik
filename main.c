@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
     vect gipher_blk;
-    GOST_Kuz_Expand_Key(test_key[0], test_key[1]);
+    GOST_Kuz_Expand_Key(test_key);
 
     GOST_Kuz_Encrypt(encrypt_test_string, gipher_blk);
 
