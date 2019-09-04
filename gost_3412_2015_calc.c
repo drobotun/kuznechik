@@ -140,19 +140,19 @@ void
 GOST_Kuz_Expand_Key(const uint8_t *key)
 {
     int i;
-    uint8_t key_1[BLOCK_SIZE];
-    uint8_t key_2[BLOCK_SIZE];
-    uint8_t iter_1[BLOCK_SIZE];
-    uint8_t iter_2[BLOCK_SIZE];
-    uint8_t iter_3[BLOCK_SIZE];
-    uint8_t iter_4[BLOCK_SIZE];
-    memcpy(key_1, key + BLOCK_SIZE, BLOCK_SIZE);
-    memcpy(key_2, key, BLOCK_SIZE);
+    uint8_t key_1[KEY_SIZE/2];
+    uint8_t key_2[KEY_SIZE/2];
+    uint8_t iter_1[KEY_SIZE/2];
+    uint8_t iter_2[KEY_SIZE/2];
+    uint8_t iter_3[KEY_SIZE/2];
+    uint8_t iter_4[KEY_SIZE/2];
+    memcpy(key_1, key + KEY_SIZE/2, KEY_SIZE/2);
+    memcpy(key_2, key, KEY_SIZE/2);
     GOST_Kuz_Get_C();
-    memcpy(iter_key[0], key_1, BLOCK_SIZE);
-    memcpy(iter_key[1], key_2, BLOCK_SIZE);
-    memcpy(iter_1, key_1, BLOCK_SIZE);
-    memcpy(iter_2, key_2, BLOCK_SIZE);
+    memcpy(iter_key[0], key_1, KEY_SIZE/2);
+    memcpy(iter_key[1], key_2, KEY_SIZE/2);
+    memcpy(iter_1, key_1, KEY_SIZE/2);
+    memcpy(iter_2, key_2, KEY_SIZE/2);
     for (i = 0; i < 4; i++)
     {
         GOST_Kuz_F(iter_1, iter_2, iter_3, iter_4, iter_C[0 + 8 * i]);
@@ -163,8 +163,8 @@ GOST_Kuz_Expand_Key(const uint8_t *key)
         GOST_Kuz_F(iter_3, iter_4, iter_1, iter_2, iter_C[5 + 8 * i]);
         GOST_Kuz_F(iter_1, iter_2, iter_3, iter_4, iter_C[6 + 8 * i]);
         GOST_Kuz_F(iter_3, iter_4, iter_1, iter_2, iter_C[7 + 8 * i]);
-        memcpy(iter_key[2 * i + 2], iter_1, BLOCK_SIZE);
-        memcpy(iter_key[2 * i + 3], iter_2, BLOCK_SIZE);
+        memcpy(iter_key[2 * i + 2], iter_1, KEY_SIZE/2);
+        memcpy(iter_key[2 * i + 3], iter_2, KEY_SIZE/2);
     }
 
 #ifdef DEBUG_MODE
