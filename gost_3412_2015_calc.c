@@ -64,7 +64,8 @@ GOST_Kuz_R(uint8_t *state)
     vect internal;
     for (i = 15; i >= 0; i--)
     {
-        internal[i - 1] = state[i];
+        if (i - 1 >= 0)
+            internal[i - 1] = state[i];
         a_15 ^= GOST_Kuz_GF_mul(state[i], l_vec[i]);
     }
     internal[15] = a_15;
@@ -78,7 +79,7 @@ GOST_Kuz_reverse_R(uint8_t *state)
     uint8_t a_0;
     a_0 = state[15];
     vect internal;
-    for (i = 0; i < 16; i++)
+    for (i = 1; i < 16; i++)
     {
         internal[i] = state[i - 1];
         a_0 ^= GOST_Kuz_GF_mul(internal[i], l_vec[i]);
