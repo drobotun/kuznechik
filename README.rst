@@ -2,6 +2,13 @@
 GOST 34.12 - 2015 "Kuznechik"
 =============================
 
+.. image:: https://img.shields.io/github/license/drobotun/virustotalapi3?style=flat
+    :target: http://doge.mit-license.org
+.. image:: https://img.shields.io/badge/HACKMAG-blue?color=purple)
+    :target: https://hackmag.com/author/drobotun)
+.. image:: https://img.shields.io/badge/-%5D%5Bakep-blue
+    :target: https://hackmag.com/stuff/working-with-grasshopper
+
 Implementation of the Kuznyechik block cipher (`GOST 34.12-2015 <https://tc26.ru/standard/gost/GOST_R_3412-2015.pdf>`_) in C
 
 This repository contains an implementation of the Russian federal standard for block cipher **Kuznyechik** (also known as `GOST 34.12-2015 <https://tc26.ru/standard/gost/GOST_R_3412-2015.pdf>`_). The algorithm uses 128‑bit blocks and 256‑bit keys.
