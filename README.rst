@@ -4,7 +4,7 @@ GOST 34.12 - 2015 "Kuznechik"
 
 .. image:: https://img.shields.io/github/license/drobotun/virustotalapi3?style=flat
     :target: http://doge.mit-license.org
-.. image:: https://img.shields.io/badge/HACKMAG-blue?color=purple)
+.. image:: https://img.shields.io/badge/HACKMAG-blue?color=purple
     :target: https://hackmag.com/stuff/working-with-grasshopper
 .. image:: https://img.shields.io/badge/-%5D%5Bakep-blue
     :target: tps://xakep.ru/2017/02/02/working-with-grasshopper/
