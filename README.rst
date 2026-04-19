@@ -6,8 +6,8 @@ GOST 34.12 - 2015 "Kuznechik"
     :target: http://doge.mit-license.org
 .. image:: https://img.shields.io/badge/HACKMAG-blue?color=purple
     :target: https://hackmag.com/stuff/working-with-grasshopper
-.. image:: https://img.shields.io/badge/-%5D%5Bakep-blue
-    :target: tps://xakep.ru/2017/02/02/working-with-grasshopper/
+.. image:: https://img.shields.io/badge/-%5D%5Bakep-blue?color=blue
+    :target: https://xakep.ru/2017/02/02/working-with-grasshopper/
 
 Implementation of the Kuznyechik block cipher (`GOST 34.12-2015 <https://tc26.ru/standard/gost/GOST_R_3412-2015.pdf>`_) in C
 
