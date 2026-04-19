@@ -11,11 +11,11 @@
 #define BLOCK_SIZE 16
 #define KEY_SIZE 32
 
-typedef uint8_t vect[BLOCK_SIZE]; //блок размером 128 бит
+typedef uint8_t vect[BLOCK_SIZE]; // 128-bit block
 
-vect iter_C[32]; //итерационные константы C
+vect iter_C[32]; // iteration constants
 
-vect iter_key[10]; //итерационные ключи шифрования
+vect iter_key[10]; // iteration cipher keys
 
 void
 kuznechik_expand_key(const uint8_t* key);
