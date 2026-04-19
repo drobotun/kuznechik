@@ -4,7 +4,7 @@ GOST 34.12 - 2015 "Kuznechik"
 
 Implementation of the Kuznyechik block cipher (GOST 3412-2015) in C
 
-This repository contains an implementation of the Russian federal standard for block cipher **Kuznyechik** (also known as GOST 3412-2015). The algorithm uses 128‑bit blocks and 256‑bit keys.
+This repository contains an implementation of the Russian federal standard for block cipher **Kuznyechik** (also known as `GOST 3412-2015 <https://protect.gost.ru/document.aspx?control=7&id=205007>`). The algorithm uses 128‑bit blocks and 256‑bit keys.
 
 Features
 ++++++++
