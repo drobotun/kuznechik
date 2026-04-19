@@ -164,5 +164,3 @@ License
 MIT Copyright (c) 2019 Evgeny Drobotun
 
 ---
-
-Developed based on the GOST 3412-2015 standard.
