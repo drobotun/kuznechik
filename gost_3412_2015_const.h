@@ -2,8 +2,8 @@
 #define GOST_3412_2015_CONST_H
 
 /*
-* значения для нелинейного преобразования
-* множества двоичных векторов (преобразование S)
+* values ​​for a nonlinear transformation of 
+* a set of binary vectors (S-transformation)
 */
 static const unsigned char pi[256] = {
     0xFC, 0xEE, 0xDD, 0x11, 0xCF, 0x6E, 0x31, 0x16,
@@ -41,8 +41,8 @@ static const unsigned char pi[256] = {
 };
 
 /*
-* значения для обратного нелинейного преобразования
-* множества двоичных векторов (обратное преобразование S)
+* values ​​for the inverse nonlinear transformation of 
+* a set of binary vectors (inverse S-transformation)
 */
 static const unsigned char reverse_pi[256] = {
     0xA5, 0x2D, 0x32, 0x8F, 0x0E, 0x30, 0x38, 0xC0,
