@@ -26,31 +26,36 @@ Project Structure
 
 ::
 
-    ├── gost_3412_2015_calc.h       // header with function declarations
-    ├── gost_3412_2015_calc.c       // algorithm implementation
-    ├── gost_3412_2015_const.h      // constants (pi, reverse_pi, l_vec)
-    └── test.h                      // optional test helper
+    ├── kuznechik_calc.h       // header with function declarations
+    ├── kuznechik_calc.c       // algorithm implementation
+    ├── kuznechik_const.h      // constants (pi, reverse_pi, l_vec)
+    └── kuznechik_test.h       // optional test helper
 
 Requirements
 ++++++++++++
 
 - C99 compatible compiler (GCC, Clang, MSVC).
-- Standard headers: ``stdint.h``, ``string.h``, ``malloc.h`` (or ``stdlib.h`` on some platforms).
+- Standard headers: ``stdint.h``, ``string.h``, ``stdio.h``, ``stdlib.h``.
 
 Building
 ++++++++
 
-To compile the library:
+To use in your project:
+
+1. Copy the files ``kuznechik_calc.h``, ``kuznechik_const.h``, ``kuznechik_calc.c`` and ``kuznechik_test.h`` (if necessary) into your project directory.
+2. Include the header files ``kuznechik_calc.h``, ``kuznechik_const.h`` and ``kuznechik_test.h`` (if necessary).
+3. Compile your project together with ``kuznechik_calc.c``.
+
 
 .. code-block:: bash
 
-    gcc -c gost_3412_2015_calc.c -o gost_3412_2015_calc.o
+    gcc -o kuznechik main.c kuznechik_calc.c 
 
 To enable debug output, add ``-DDEBUG_MODE``:
 
 .. code-block:: bash
 
-    gcc -DDEBUG_MODE -c gost_3412_2015_calc.c -o gost_3412_2015_calc.o
+    gcc -DDEBUG_MODE -o kuznechik main.c kuznechik_calc.c 
 
 Usage
 +++++
