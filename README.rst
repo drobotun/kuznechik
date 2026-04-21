@@ -1,5 +1,5 @@
 =============================
-GOST 34.12 - 2015 "Kuznechik"
+GOST R 34.12 - 2015 "Kuznechik"
 =============================
 
 .. image:: https://img.shields.io/github/license/drobotun/virustotalapi3?style=flat
