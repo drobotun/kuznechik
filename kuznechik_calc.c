@@ -1,0 +1,228 @@
+#include "kuznechik_calc.h"
+
+#ifdef DEBUG_MODE
+static void
+kuznechik_print_debug(uint8_t* state)
+{
+    int i;
+    for (i = 0; i < BLOCK_SIZE; i++)
+        printf("%02x", state[i]);
+    printf("\n");
+}
+#endif
+
+static void
+kuznechik_s_transformation(const uint8_t* in_data, uint8_t* out_data)
+{
+    int i;
+    for (i = 0; i < BLOCK_SIZE; i++)
+        out_data[i] = pi[in_data[i]];
+}
+
+static void
+kuznechik_reverse_s_transformation(const uint8_t* in_data, uint8_t* out_data)
+{
+    int i;
+    for (i = 0; i < BLOCK_SIZE; i++)
+        out_data[i] = reverse_pi[in_data[i]];
+}
+
+static void
+kuznechik_xor(const uint8_t* a, const uint8_t* b, uint8_t* c)
+{
+    int i;
+    for (i = 0; i < BLOCK_SIZE; i++)
+        c[i] = a[i] ^ b[i];
+}
+
+static uint8_t
+kuznechik_gf_mul(uint8_t a, uint8_t b)
+{
+    uint8_t c = 0;
+    uint8_t hi_bit;
+    int i;
+    for (i = 0; i < 8; i++)
+    {
+        if (b & 1)
+            c ^= a;
+        hi_bit = a & 0x80;
+        a <<= 1;
+        if (hi_bit)
+            a ^= 0xc3; //polinom x^8+x^7+x^6+x+1
+        b >>= 1;
+    }
+    return c;
+}
+
+static void
+kuznechik_r_transformation(uint8_t* state)
+{
+    int i;
+    uint8_t a_15 = 0;
+    vect internal;
+    for (i = 15; i >= 0; i--)
+    {
+        if (i - 1 >= 0)
+            internal[i - 1] = state[i];
+        a_15 ^= kuznechik_gf_mul(state[i], l_vec[i]);
+    }
+    internal[15] = a_15;
+    memcpy(state, internal, BLOCK_SIZE);
+}
+
+static void
+kuznechik_reverse_r_transformation(uint8_t* state)
+{
+    int i;
+    uint8_t a_0;
+    a_0 = state[15];
+    vect internal;
+    for (i = 1; i < 16; i++)
+    {
+        internal[i] = state[i - 1];
+        a_0 ^= kuznechik_gf_mul(internal[i], l_vec[i]);
+    }
+    internal[0] = a_0;
+    memcpy(state, internal, BLOCK_SIZE);
+}
+
+static void
+kuznechik_l_transformation(const uint8_t* in_data, uint8_t* out_data)
+{
+    int i;
+    vect internal;
+    memcpy(internal, in_data, BLOCK_SIZE);
+    for (i = 0; i < 16; i++)
+        kuznechik_r_transformation(internal);
+    memcpy(out_data, internal, BLOCK_SIZE);
+}
+
+static void
+kuznechik_reverse_l_transformation(const uint8_t* in_data, uint8_t* out_data)
+{
+    int i;
+    vect internal;
+    memcpy(internal, in_data, BLOCK_SIZE);
+    for (i = 0; i < 16; i++)
+        kuznechik_reverse_r_transformation(internal);
+    memcpy(out_data, internal, BLOCK_SIZE);
+}
+
+static void
+kuznechik_get_iter_const()
+{
+    int i;
+    vect iter_num[32];
+    for (i = 0; i < 32; i++)
+    {
+        memset(iter_num[i], 0, BLOCK_SIZE);
+        iter_num[i][0] = i+1;
+    }
+    for (i = 0; i < 32; i++)
+         kuznechik_l_transformation(iter_num[i], iter_const[i]);
+}
+
+static void
+kuznechik_f_transformation(const uint8_t* in_key_1, const uint8_t* in_key_2,
+           uint8_t* out_key_1, uint8_t* out_key_2,
+           uint8_t* iter_const)
+{
+    vect internal;
+    memcpy(out_key_2, in_key_1, BLOCK_SIZE);
+    kuznechik_xor(in_key_1, iter_const, internal);
+    kuznechik_s_transformation(internal, internal);
+    kuznechik_l_transformation(internal, internal);
+    kuznechik_xor(internal, in_key_2, out_key_1);
+}
+
+void
+kuznechik_expand_key(const uint8_t* key)
+{
+    int i;
+    uint8_t key_1[KEY_SIZE/2];
+    uint8_t key_2[KEY_SIZE/2];
+    uint8_t iter_1[KEY_SIZE/2];
+    uint8_t iter_2[KEY_SIZE/2];
+    uint8_t iter_3[KEY_SIZE/2];
+    uint8_t iter_4[KEY_SIZE/2];
+    memcpy(key_1, key + KEY_SIZE/2, KEY_SIZE/2);
+    memcpy(key_2, key, KEY_SIZE/2);
+    kuznechik_get_iter_const();
+    memcpy(iter_key[0], key_1, KEY_SIZE/2);
+    memcpy(iter_key[1], key_2, KEY_SIZE/2);
+    memcpy(iter_1, key_1, KEY_SIZE/2);
+    memcpy(iter_2, key_2, KEY_SIZE/2);
+    for (i = 0; i < 4; i++)
+    {
+        kuznechik_f_transformation(iter_1, iter_2, iter_3, iter_4, iter_const[0 + 8*  i]);
+        kuznechik_f_transformation(iter_3, iter_4, iter_1, iter_2, iter_const[1 + 8*  i]);
+        kuznechik_f_transformation(iter_1, iter_2, iter_3, iter_4, iter_const[2 + 8*  i]);
+        kuznechik_f_transformation(iter_3, iter_4, iter_1, iter_2, iter_const[3 + 8*  i]);
+        kuznechik_f_transformation(iter_1, iter_2, iter_3, iter_4, iter_const[4 + 8*  i]);
+        kuznechik_f_transformation(iter_3, iter_4, iter_1, iter_2, iter_const[5 + 8*  i]);
+        kuznechik_f_transformation(iter_1, iter_2, iter_3, iter_4, iter_const[6 + 8*  i]);
+        kuznechik_f_transformation(iter_3, iter_4, iter_1, iter_2, iter_const[7 + 8*  i]);
+        memcpy(iter_key[2 * i + 2], iter_1, KEY_SIZE/2);
+        memcpy(iter_key[2 * i + 3], iter_2, KEY_SIZE/2);
+    }
+
+#ifdef DEBUG_MODE
+    printf("Iteration cipher keys:\n");
+    for (i = 0; i < 10; i++)
+        kuznechik_print_debug(iter_key[i]);
+#endif
+}
+
+void
+kuznechik_encrypt(const uint8_t* blk, uint8_t* out_blk)
+{
+    int i;
+    memcpy(out_blk, blk, BLOCK_SIZE);
+
+#ifdef DEBUG_MODE
+    printf("Text:\n");
+    kuznechik_print_debug(out_blk);
+#endif
+
+    for(i = 0; i < 9; i++)
+    {
+        kuznechik_xor(iter_key[i], out_blk, out_blk);
+
+        kuznechik_s_transformation(out_blk, out_blk);
+
+        kuznechik_l_transformation(out_blk, out_blk);
+    }
+    kuznechik_xor(out_blk, iter_key[9], out_blk);
+
+#ifdef DEBUG_MODE
+    printf("Encrypted text:\n");
+    kuznechik_print_debug(out_blk);
+#endif
+}
+
+void
+kuznechik_decrypt(const uint8_t* blk, uint8_t* out_blk)
+{
+    int i;
+    memcpy(out_blk, blk, BLOCK_SIZE);
+
+#ifdef DEBUG_MODE
+    printf("Gipher text:\n");
+    kuznechik_print_debug(out_blk);
+#endif
+
+    kuznechik_xor(out_blk, iter_key[9], out_blk);
+    for(i = 8; i >= 0; i--)
+    {
+        kuznechik_reverse_l_transformation(out_blk, out_blk);
+
+        kuznechik_reverse_s_transformation(out_blk, out_blk);
+
+        kuznechik_xor(iter_key[i], out_blk, out_blk);
+    }
+
+#ifdef DEBUG_MODE
+    printf("Decrypted text:\n");
+    kuznechik_print_debug(out_blk);
+#endif
+}
