@@ -168,7 +168,6 @@ Notes
 
 - The implementation does **not** use dynamic memory allocation (apart from constant global arrays).
 - Block size (``BLOCK_SIZE``) and key size (``KEY_SIZE``) are fixed as per the standard.
-- The constants ``pi``, ``reverse_pi``, and ``l_vec`` must be defined in ``gost_3412_2015_const.h``. This file is assumed to be provided separately.
 
 License
 +++++++
