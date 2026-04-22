@@ -2,7 +2,7 @@
 
 #ifdef DEBUG_MODE
 static void
-kuznechik_print_debug(uint8_t* state)
+kuznechik_print_debug(const uint8_t* state)
 {
     int i;
     for (i = 0; i < BLOCK_SIZE; i++)
