@@ -5,9 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "kuznechik_const.h"
-#include "kuznechik_test.h"
 
 #define BLOCK_SIZE 16
 #define KEY_SIZE 32
