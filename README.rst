@@ -33,8 +33,7 @@ Project Structure
    ├── kuznechik_calc.h    // public API declarations
    ├── kuznechik_calc.c    // algorithm implementation
    ├── kuznechik_const.h   // constants (pi, reverse_pi, l_vec)
-   ├── kuznechik_test.h    // test vectors (key, plaintext, expected ciphertext)
-   └── README.rst
+   └── kuznechik_test.h    // test vectors (key, plaintext, expected ciphertext)
 
 Requirements
 ------------
