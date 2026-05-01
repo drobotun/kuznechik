@@ -9,7 +9,7 @@ GOST R 34.12 - 2015 "Kuznechik"
 .. image:: https://img.shields.io/badge/-%5D%5Bakep-blue?color=blue
     :target: https://xakep.ru/2017/02/02/working-with-grasshopper/
 
-Implementation of the Kuznyechik block cipher (GOST R 34.12-2015) in C.
+Implementation of the Kuznyechik block cipher (`GOST R 34.12-2015`_) in C.
 This repository contains an implementation of the Russian national standard
 for block cipher Kuznyechik (also known as `GOST R 34.12-2015`_).
 The algorithm uses 128‑bit blocks and 256‑bit keys.
